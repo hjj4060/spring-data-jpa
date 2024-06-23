@@ -1,9 +1,5 @@
 package study.data_jpa.repository;
 
-import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
-import org.hibernate.sql.ast.tree.cte.CteTable;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +9,10 @@ import study.data_jpa.dto.MemberDTO;
 import study.data_jpa.entity.Member;
 import study.data_jpa.entity.Team;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -104,8 +100,21 @@ class MemberJpaRepositoryTest {
         memberRepository.save(m1);
 
         List<MemberDTO> memberDTO = memberRepository.findMemberDTO();
-        for (MemberDTO memberDTO1 : memberDTO) {
-            System.out.println("memberDTO1 = " + memberDTO1);
+        for (MemberDTO dto : memberDTO) {
+            System.out.println("dto = " + dto);
+        }
+    }
+
+    @Test
+    public void findByNames() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> result = memberRepository.findByNames(Arrays.asList("AAA", "BBB"));
+        for (Member member : result) {
+            System.out.println("member = " + member);
         }
     }
 }
