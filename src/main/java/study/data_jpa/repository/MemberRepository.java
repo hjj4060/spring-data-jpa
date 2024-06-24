@@ -1,5 +1,7 @@
 package study.data_jpa.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +21,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //파라미터 바인딩을 List로 넘겨서 in 조건을 사용할 수 있다.
     @Query("select m from Member m where m.username in :names")
     List<Member> findByNames(@Param("names") Collection<String> names);
+
+    Page<Member> findByAge(int age, PageRequest pageRequest);
 }
